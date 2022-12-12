@@ -72,7 +72,7 @@ class InterventionController extends AbstractController
 
             $intervention->setTotalPrice($totalPrice);
             $this->em->persist($intervention);
-            $this->em->flush();
+            $this->em->flush();            
 
             return $this->redirectToRoute('intervention_show', [
                 'id' => $intervention->getId(),
@@ -84,6 +84,26 @@ class InterventionController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * Send data to Dolibarr 
+     */
+    private function sendDataToDolibarr(Intervention $intervention) {
+
+        // Le client existe-t'il dans Dolibarr 
+        $client = $intervention->getClient();
+        dump($client);
+
+
+        // Le service existe-t'il dans Dolibarr 
+
+
+
+        // Bon d'intervention
+
+    }
+
 
     /**
      * @Route("/{id}", name="intervention_show", methods={"GET","POST"})
@@ -118,6 +138,10 @@ class InterventionController extends AbstractController
                             $intervention->setStatus($newStatus);
                             $this->em->persist($intervention);
                             $this->em->flush();
+
+                            // Send data to Dolibarr 
+                            $this->sendDataToDolibarr($intervention);
+                            
                             return $this->redirectToRoute('index');
                         }
                         break;

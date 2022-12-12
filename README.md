@@ -56,3 +56,13 @@ Next, you will have to connect with the default admin account.
 * Email : admin@gmail.com
 
 * Password : admin
+
+
+# Backup and restore database
+
+mysqldump atedi -u admin -p > atedi.sql 
+
+mysql atedi -u admin -p < atedi.sql 
+
+
+
